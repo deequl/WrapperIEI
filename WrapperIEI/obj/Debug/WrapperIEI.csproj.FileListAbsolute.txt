@@ -1,0 +1,11 @@
+C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\bin\Debug\WrapperIEI.exe.config
+C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\bin\Debug\WrapperIEI.exe
+C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\bin\Debug\WrapperIEI.pdb
+C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\bin\Debug\WebDriver.dll
+C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\bin\Debug\WebDriver.xml
+C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\obj\Debug\WrapperIEI.csprojResolveAssemblyReference.cache
+C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\obj\Debug\WrapperIEI.WrapperIEI.resources
+C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\obj\Debug\WrapperIEI.Properties.Resources.resources
+C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\obj\Debug\WrapperIEI.csproj.GenerateResource.Cache
+C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\obj\Debug\WrapperIEI.exe
+C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\obj\Debug\WrapperIEI.pdb
