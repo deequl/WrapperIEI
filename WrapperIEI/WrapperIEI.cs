@@ -10,11 +10,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WrapperIEI.DTO;
 
 namespace WrapperIEI
 {
     public partial class WrapperIEI : Form
     {
+
+        static IWebDriver driver = new ChromeDriver();
+        string author, price, title, discount;
+        double priceAmount, discountAmount;
+        List<LibroDTO> books = new List<LibroDTO>();
+
+
         public WrapperIEI()
         {
             InitializeComponent();
@@ -27,34 +35,119 @@ namespace WrapperIEI
         }
 
         public void Chrome() {
-            using (IWebDriver driver = new ChromeDriver())
-            {
                 //Notice navigation is slightly different than the Java version
                 //This is because 'get' is a keyword in C#
-                driver.Navigate().GoToUrl("https://www.amazon.es/comprar-libros-espa%C3%B1ol/b/ref=nav_shopall_abks?ie=UTF8&node=599364031");
+                //driver.Navigate().GoToUrl("https://www.amazon.es/comprar-libros-espa%C3%B1ol/b/ref=nav_shopall_abks?ie=UTF8&node=599364031");
+                driver.Navigate().GoToUrl("https://www.amazon.es");
 
-                // Find the text input element by its name
-                IWebElement query = driver.FindElement(By.Id("twotabsearchtextbox"));
+            // Find the text input element by its name
+            IWebElement query = driver.FindElement(By.Id("twotabsearchtextbox"));
 
                 // Enter something to search for
-                query.SendKeys("Harry Potter");
+                query.SendKeys("corsair keyboard");
 
-                IWebElement resultadosBusqueda = driver.FindElement(By.Id(""));
+                IWebElement searchButton  = driver.FindElement(By.ClassName("nav-input"));
+                searchButton.Click();
+
+
+                WaitUntilElementExists(By.Id("atfResults"));
+                IWebElement resultadosBusqueda = driver.FindElement(By.Id("atfResults"));
                 IReadOnlyCollection<IWebElement> libros = resultadosBusqueda.FindElements(By.TagName("li"));
                 foreach(IWebElement libro in libros)
                 {
-                    Console.WriteLine(libro);
-                }
+                    
 
-                // Now submit the form. WebDriver will find the form for us from the element
-                query.Submit();
+                    try
+                    {
+                        author = libro.FindElement(By.ClassName("a-col-right")).FindElement(By.XPath("div[1]/div[2]/span[2]")).Text;
+                    }
 
-                // Google's search is rendered dynamically with JavaScript.
-                // Wait for the page to load, timeout after 10 seconds
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
-                wait.Until(d => d.Title.StartsWith("Harry Potter", StringComparison.OrdinalIgnoreCase));
+                    catch (Exception)
+                    {
+                     author = null;
+                    }
+
+                    try
+                    {
+                        title = libro.FindElement(By.TagName("h2")).Text;
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                        //title = null;
+                    }
+
+                    try
+                    {
+                        price = libro.FindElement(By.ClassName("s-price")).Text;
+                    }
+                    catch (Exception)
+                    {
+                        price = null;
+                    }
+
+                    try
+                    {
+                        discount = libro.FindElement(By.ClassName("a-text-strike")).Text;
+                    }
+                    catch (Exception) {
+                        discount = null;
+                    }
 
 
+
+
+
+                Console.WriteLine((!String.IsNullOrEmpty(title)) ? title : "No title");
+                    Console.WriteLine((!String.IsNullOrEmpty(author)) ? author : "No author");
+
+                    if (!String.IsNullOrEmpty(price))
+                    {
+                        priceAmount = Double.Parse(price.Split(' ').Last());
+                    }
+
+                    if (!String.IsNullOrEmpty(discount)) {
+                        discountAmount = Double.Parse(discount.Split(' ').Last());
+                    }
+
+                LibroDTO libroSave = new LibroDTO
+                {
+
+                    Title = ((!String.IsNullOrEmpty(title)) ? title : "No title"),
+                    Author = ((!String.IsNullOrEmpty(author)) ? author : "No author"),
+                    Price = priceAmount,
+                    Discount = discountAmount
+                };
+
+                books.Add(libroSave);
+
+
+
+
+            }
+        }
+
+
+
+
+        //this will search for the element until a timeout is reached
+        public static IWebElement WaitUntilElementExists(By elementLocator, int timeout = 10)
+        {
+            try
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout));
+                return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(elementLocator));
+            }
+            catch (NoSuchElementException)
+            {
+                Console.WriteLine("Element with locator: '" + elementLocator + "' was not found in current context page.");
+                throw;
+            }
+
+            catch (WebDriverTimeoutException)
+            {
+                Console.WriteLine("Time exceded! Element with locator: '" + elementLocator + "' was not found in current context page.");
+                throw;
             }
         }
     }

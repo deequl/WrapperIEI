@@ -9,3 +9,15 @@ C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\obj\Debug\WrapperIEI.Prop
 C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\obj\Debug\WrapperIEI.csproj.GenerateResource.Cache
 C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\obj\Debug\WrapperIEI.exe
 C:\Users\mialmar4\Desktop\WrapperIEI-master\WrapperIEI\obj\Debug\WrapperIEI.pdb
+C:\Users\hjarabar\Documents\Selenium\WrapperIEI\WrapperIEI\bin\Debug\WrapperIEI.exe.config
+C:\Users\hjarabar\Documents\Selenium\WrapperIEI\WrapperIEI\obj\Debug\WrapperIEI.exe
+C:\Users\hjarabar\Documents\Selenium\WrapperIEI\WrapperIEI\obj\Debug\WrapperIEI.pdb
+C:\Users\hjarabar\Documents\Selenium\WrapperIEI\WrapperIEI\bin\Debug\WrapperIEI.exe
+C:\Users\hjarabar\Documents\Selenium\WrapperIEI\WrapperIEI\bin\Debug\WrapperIEI.pdb
+C:\Users\hjarabar\Documents\Selenium\WrapperIEI\WrapperIEI\bin\Debug\WebDriver.dll
+C:\Users\hjarabar\Documents\Selenium\WrapperIEI\WrapperIEI\bin\Debug\WebDriver.xml
+C:\Users\hjarabar\Documents\Selenium\WrapperIEI\WrapperIEI\obj\Debug\WrapperIEI.csprojResolveAssemblyReference.cache
+C:\Users\hjarabar\Documents\Selenium\WrapperIEI\WrapperIEI\obj\Debug\WrapperIEI.WrapperIEI.resources
+C:\Users\hjarabar\Documents\Selenium\WrapperIEI\WrapperIEI\obj\Debug\WrapperIEI.Properties.Resources.resources
+C:\Users\hjarabar\Documents\Selenium\WrapperIEI\WrapperIEI\obj\Debug\WrapperIEI.csproj.GenerateResource.Cache
+C:\Users\hjarabar\Documents\Selenium\WrapperIEI\WrapperIEI\bin\Debug\SeleniumExtras.WaitHelpers.dll
