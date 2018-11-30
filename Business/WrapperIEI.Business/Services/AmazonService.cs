@@ -16,106 +16,145 @@ namespace WrapperIEI.Business.Services
 {
     public class AmazonService
     {
-        static IWebDriver driver = new ChromeDriver();
+
         string author, price, title, discount;
         double priceAmount, discountAmount;
         List<LibroDTO> books = new List<LibroDTO>();
+        IWebDriver driver;
+        IWebElement query, searchButton, resultadosBusqueda;
+        IReadOnlyCollection<IWebElement> libros;
 
+
+        public AmazonService( IWebDriver driver ) {
+            this.driver = driver;
+        }
 
         public void Init()
         {
-            //Notice navigation is slightly different than the Java version
-            //This is because 'get' is a keyword in C#
+            string searchText = "corsair keyboard";
+            string url = "https://www.amazon.es";
+
+            SearchElement(searchText, url);
+
+            foreach (IWebElement libro in libros)
+            {
+
+                SetBookProperties(libro);
+                StoreBook();
+
+            }
+
+
+            //// This is only for testing
+            //PrintBooks();
+            
+        }
+
+        #region Methods
+
+        private void SearchElement(string searchText, string url)
+        {
+
             //driver.Navigate().GoToUrl("https://www.amazon.es/comprar-libros-espa%C3%B1ol/b/ref=nav_shopall_abks?ie=UTF8&node=599364031");
-            driver.Navigate().GoToUrl("https://www.amazon.es");
+            driver.Navigate().GoToUrl(url);
 
-            // Find the text input element by its name
-            IWebElement query = driver.FindElement(By.Id("twotabsearchtextbox"));
+            query = driver.FindElement(By.Id("twotabsearchtextbox"));
 
-            // Enter something to search for
-            query.SendKeys("corsair keyboard");
+            // Text to search
+            query.SendKeys(searchText);
 
-            IWebElement searchButton = driver.FindElement(By.ClassName("nav-input"));
+            searchButton = driver.FindElement(By.ClassName("nav-input"));
             searchButton.Click();
 
 
             Wait.WaitUntilElementExists(By.Id("atfResults"), driver);
-            IWebElement resultadosBusqueda = driver.FindElement(By.Id("atfResults"));
-            IReadOnlyCollection<IWebElement> libros = resultadosBusqueda.FindElements(By.TagName("li"));
-            foreach (IWebElement libro in libros)
+
+            resultadosBusqueda = driver.FindElement(By.Id("atfResults"));
+            libros = resultadosBusqueda.FindElements(By.TagName("li"));
+
+        }
+
+        private void SetBookProperties(IWebElement libro)
+        {
+            try
+            {
+                author = libro.FindElement(By.ClassName("a-col-right")).FindElement(By.XPath("div[1]/div[2]/span[2]")).Text;
+            }
+
+            catch (Exception)
+            {
+                author = null;
+            }
+
+            try
+            {
+                title = libro.FindElement(By.TagName("h2")).Text;
+            }
+            catch (Exception)
             {
 
+                title = null;
+            }
 
-                try
-                {
-                    author = libro.FindElement(By.ClassName("a-col-right")).FindElement(By.XPath("div[1]/div[2]/span[2]")).Text;
-                }
+            try
+            {
+                price = libro.FindElement(By.ClassName("s-price")).Text;
+            }
+            catch (Exception)
+            {
+                price = null;
+            }
 
-                catch (Exception)
-                {
-                    author = null;
-                }
+            try
+            {
+                discount = libro.FindElement(By.ClassName("a-text-strike")).Text;
+            }
+            catch (Exception)
+            {
+                discount = null;
+            }
 
-                try
-                {
-                    title = libro.FindElement(By.TagName("h2")).Text;
-                }
-                catch (Exception)
-                {
-                    continue;
-                    //title = null;
-                }
+            if (!String.IsNullOrEmpty(price))
+            {
+                priceAmount = Double.Parse(price.Split(' ').Last());
+            }
 
-                try
-                {
-                    price = libro.FindElement(By.ClassName("s-price")).Text;
-                }
-                catch (Exception)
-                {
-                    price = null;
-                }
-
-                try
-                {
-                    discount = libro.FindElement(By.ClassName("a-text-strike")).Text;
-                }
-                catch (Exception)
-                {
-                    discount = null;
-                }
+            if (!String.IsNullOrEmpty(discount))
+            {
+                discountAmount = Double.Parse(discount.Split(' ').Last());
+            }
 
 
+        }
 
+        private void StoreBook()
+        {
+            LibroDTO libroSave = new LibroDTO
+            {
+                Provider = "Amazon",
+                Title = ((!String.IsNullOrEmpty(title)) ? title : "No title"),
+                Author = ((!String.IsNullOrEmpty(author)) ? author : "No author"),
+                Price = priceAmount,
+                Discount = discountAmount
+            };
 
+            books.Add(libroSave);
+        }
 
-                Console.WriteLine((!String.IsNullOrEmpty(title)) ? title : "No title");
-                Console.WriteLine((!String.IsNullOrEmpty(author)) ? author : "No author");
-
-                if (!String.IsNullOrEmpty(price))
-                {
-                    priceAmount = Double.Parse(price.Split(' ').Last());
-                }
-
-                if (!String.IsNullOrEmpty(discount))
-                {
-                    discountAmount = Double.Parse(discount.Split(' ').Last());
-                }
-
-                LibroDTO libroSave = new LibroDTO
-                {
-
-                    Title = ((!String.IsNullOrEmpty(title)) ? title : "No title"),
-                    Author = ((!String.IsNullOrEmpty(author)) ? author : "No author"),
-                    Price = priceAmount,
-                    Discount = discountAmount
-                };
-
-                books.Add(libroSave);
-
-
-
-
+        private void PrintBooks()
+        {
+            Console.WriteLine(" ------ BOOKS ------ ");
+            foreach (LibroDTO book in books)
+            {
+                Console.WriteLine("------------");
+                Console.WriteLine(book.Title);
+                Console.WriteLine(book.Author);
+                Console.WriteLine(book.Price);
+                Console.WriteLine(book.Discount);
+                Console.WriteLine("------------");
             }
         }
+
+        #endregion
     }
 }

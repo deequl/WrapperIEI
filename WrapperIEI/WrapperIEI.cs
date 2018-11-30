@@ -18,13 +18,12 @@ namespace WrapperIEI
     public partial class WrapperIEI : Form
     {
 
-        
-
+       
 
         public WrapperIEI()
         {
             InitializeComponent();
-            AmazonService amazon = new AmazonService();
+            AmazonService amazon = new AmazonService(new ChromeDriver());
             amazon.Init();
         }
 
