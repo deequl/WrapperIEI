@@ -90,8 +90,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Business\WrapperIEI.Business\WrapperIEI.Business.csproj">
-      <Project>{dc0fd457-d5be-4cd8-9548-5f5a1bc5c375}</Project>
+    <ProjectReference Include="..\Business\WrapperIEI.Business\WrapperIEI.Business.csproj">
+      <Project>{feb3c36b-362e-4310-ae49-911b769da71f}</Project>
       <Name>WrapperIEI.Business</Name>
     </ProjectReference>
   </ItemGroup>
