@@ -16,3 +16,12 @@ C:\Users\hecjaro\Desktop\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\netst
 C:\Users\hecjaro\Desktop\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\netstandard2.0\WrapperIEI.Business.AssemblyInfo.cs
 C:\Users\hecjaro\Desktop\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\netstandard2.0\WrapperIEI.Business.dll
 C:\Users\hecjaro\Desktop\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\netstandard2.0\WrapperIEI.Business.pdb
+C:\Users\hjara\Documents\WrapperIEI\Business\WrapperIEI.Business\bin\Debug\netstandard2.0\WrapperIEI.Business.deps.json
+C:\Users\hjara\Documents\WrapperIEI\Business\WrapperIEI.Business\bin\Debug\netstandard2.0\WrapperIEI.Business.dll
+C:\Users\hjara\Documents\WrapperIEI\Business\WrapperIEI.Business\bin\Debug\netstandard2.0\WrapperIEI.Business.pdb
+C:\Users\hjara\Documents\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\netstandard2.0\WrapperIEI.Business.csprojAssemblyReference.cache
+C:\Users\hjara\Documents\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\netstandard2.0\WrapperIEI.Business.csproj.CoreCompileInputs.cache
+C:\Users\hjara\Documents\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\netstandard2.0\WrapperIEI.Business.AssemblyInfoInputs.cache
+C:\Users\hjara\Documents\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\netstandard2.0\WrapperIEI.Business.AssemblyInfo.cs
+C:\Users\hjara\Documents\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\netstandard2.0\WrapperIEI.Business.dll
+C:\Users\hjara\Documents\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\netstandard2.0\WrapperIEI.Business.pdb

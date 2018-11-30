@@ -14,47 +14,59 @@ using WrapperIEI.Business.Helpers;
 
 namespace WrapperIEI.Business.Services
 {
-    public class AmazonService
+    public class AmazonService : IWrapperService<LibroDTO>
     {
-
         string author, price, title, discount;
         double priceAmount, discountAmount;
         List<LibroDTO> books = new List<LibroDTO>();
         IWebDriver driver;
         IWebElement query, searchButton, resultadosBusqueda;
-        IReadOnlyCollection<IWebElement> libros;
+        IReadOnlyCollection<IWebElement> booksWrapper;
 
 
         public AmazonService( IWebDriver driver ) {
             this.driver = driver;
         }
 
-        public void Init()
+        public void Init(string searchText, string url = "https://www.amazon.es")
         {
-            string searchText = "corsair keyboard";
-            string url = "https://www.amazon.es";
 
-            SearchElement(searchText, url);
+            //look for the books wrapper
+            booksWrapper = SearchItemsWrapper(searchText, url);
 
-            foreach (IWebElement libro in libros)
+            //Store each book into a list
+            foreach (IWebElement book in booksWrapper)
             {
 
-                SetBookProperties(libro);
-                StoreBook();
+                SetItemProperties(book);
+                StoreItem();
 
             }
 
 
-            //// This is only for testing
-            //PrintBooks();
-            
+            // This is only for testing
+            PrintBooks();
+
         }
 
         #region Methods
 
-        private void SearchElement(string searchText, string url)
+        private void PrintBooks()
         {
+            Console.WriteLine(" ------ BOOKS ------ ");
+            foreach (LibroDTO book in books)
+            {
+                Console.WriteLine("------------");
+                Console.WriteLine(book.Title);
+                Console.WriteLine(book.Author);
+                Console.WriteLine(book.Price);
+                Console.WriteLine(book.Discount);
+                Console.WriteLine("------------");
+            }
+        }
 
+        public IReadOnlyCollection<IWebElement> SearchItemsWrapper(string searchText, string url)
+        {
             //driver.Navigate().GoToUrl("https://www.amazon.es/comprar-libros-espa%C3%B1ol/b/ref=nav_shopall_abks?ie=UTF8&node=599364031");
             driver.Navigate().GoToUrl(url);
 
@@ -70,15 +82,19 @@ namespace WrapperIEI.Business.Services
             Wait.WaitUntilElementExists(By.Id("atfResults"), driver);
 
             resultadosBusqueda = driver.FindElement(By.Id("atfResults"));
-            libros = resultadosBusqueda.FindElements(By.TagName("li"));
-
+            return booksWrapper = resultadosBusqueda.FindElements(By.TagName("li"));
         }
 
-        private void SetBookProperties(IWebElement libro)
+        public List<LibroDTO> GetList()
+        {
+            return books;
+        }
+
+        public void SetItemProperties(IWebElement item)
         {
             try
             {
-                author = libro.FindElement(By.ClassName("a-col-right")).FindElement(By.XPath("div[1]/div[2]/span[2]")).Text;
+                author = item.FindElement(By.ClassName("a-col-right")).FindElement(By.XPath("div[1]/div[2]/span[2]")).Text;
             }
 
             catch (Exception)
@@ -88,7 +104,7 @@ namespace WrapperIEI.Business.Services
 
             try
             {
-                title = libro.FindElement(By.TagName("h2")).Text;
+                title = item.FindElement(By.TagName("h2")).Text;
             }
             catch (Exception)
             {
@@ -98,7 +114,7 @@ namespace WrapperIEI.Business.Services
 
             try
             {
-                price = libro.FindElement(By.ClassName("s-price")).Text;
+                price = item.FindElement(By.ClassName("s-price")).Text;
             }
             catch (Exception)
             {
@@ -107,7 +123,7 @@ namespace WrapperIEI.Business.Services
 
             try
             {
-                discount = libro.FindElement(By.ClassName("a-text-strike")).Text;
+                discount = item.FindElement(By.ClassName("a-text-strike")).Text;
             }
             catch (Exception)
             {
@@ -116,22 +132,20 @@ namespace WrapperIEI.Business.Services
 
             if (!String.IsNullOrEmpty(price))
             {
-                priceAmount = Double.Parse(price.Split(' ').Last());
+                priceAmount = Double.Parse(price.Split(' ').Last(), System.Globalization.CultureInfo.CurrentCulture);
             }
 
             if (!String.IsNullOrEmpty(discount))
             {
-                discountAmount = Double.Parse(discount.Split(' ').Last());
+                discountAmount = Double.Parse(discount.Split(' ').Last(), System.Globalization.CultureInfo.CurrentCulture);
             }
-
-
         }
 
-        private void StoreBook()
+        public void StoreItem()
         {
             LibroDTO libroSave = new LibroDTO
             {
-                Provider = "Amazon",
+                Provider = Constants.AMAZON,
                 Title = ((!String.IsNullOrEmpty(title)) ? title : "No title"),
                 Author = ((!String.IsNullOrEmpty(author)) ? author : "No author"),
                 Price = priceAmount,
@@ -139,20 +153,6 @@ namespace WrapperIEI.Business.Services
             };
 
             books.Add(libroSave);
-        }
-
-        private void PrintBooks()
-        {
-            Console.WriteLine(" ------ BOOKS ------ ");
-            foreach (LibroDTO book in books)
-            {
-                Console.WriteLine("------------");
-                Console.WriteLine(book.Title);
-                Console.WriteLine(book.Author);
-                Console.WriteLine(book.Price);
-                Console.WriteLine(book.Discount);
-                Console.WriteLine("------------");
-            }
         }
 
         #endregion

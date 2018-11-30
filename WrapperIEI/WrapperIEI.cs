@@ -24,7 +24,7 @@ namespace WrapperIEI
         {
             InitializeComponent();
             AmazonService amazon = new AmazonService(new ChromeDriver());
-            amazon.Init();
+            amazon.Init("corsair keyboard");
         }
 
         private void Form1_Load(object sender, EventArgs e)

@@ -3159,23 +3159,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hecjaro\\.nuget\\packages\\": {},
+    "C:\\Users\\hjara\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hecjaro\\Desktop\\WrapperIEI\\Business\\WrapperIEI.Business\\WrapperIEI.Business.csproj",
+      "projectUniqueName": "C:\\Users\\hjara\\Documents\\WrapperIEI\\Business\\WrapperIEI.Business\\WrapperIEI.Business.csproj",
       "projectName": "WrapperIEI.Business",
-      "projectPath": "C:\\Users\\hecjaro\\Desktop\\WrapperIEI\\Business\\WrapperIEI.Business\\WrapperIEI.Business.csproj",
-      "packagesPath": "C:\\Users\\hecjaro\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hecjaro\\Desktop\\WrapperIEI\\Business\\WrapperIEI.Business\\obj\\",
+      "projectPath": "C:\\Users\\hjara\\Documents\\WrapperIEI\\Business\\WrapperIEI.Business\\WrapperIEI.Business.csproj",
+      "packagesPath": "C:\\Users\\hjara\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\hjara\\Documents\\WrapperIEI\\Business\\WrapperIEI.Business\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\hecjaro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hjara\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
