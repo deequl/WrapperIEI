@@ -1,0 +1,4 @@
+C:\Users\hecjaro\Desktop\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\WrapperIEI.Business.csprojAssemblyReference.cache
+C:\Users\hecjaro\Desktop\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\WrapperIEI.Business.Properties.Resources.resources
+C:\Users\hecjaro\Desktop\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\WrapperIEI.Business.csproj.GenerateResource.cache
+C:\Users\hecjaro\Desktop\WrapperIEI\Business\WrapperIEI.Business\obj\Debug\WrapperIEI.Business.csproj.CoreCompileInputs.cache
