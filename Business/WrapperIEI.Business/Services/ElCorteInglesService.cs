@@ -6,12 +6,12 @@ using WrapperIEI.DTO;
 
 namespace WrapperIEI.Business.Services
 {
-    class ElCorteInglesService : IWrapperService<LibroDTO>
+    public class ElCorteInglesService : IWrapperService<BookDTO>
     {
 
         string author, price, title, discount;
         double priceAmount, discountAmount;
-        List<LibroDTO> books = new List<LibroDTO>();
+        List<BookDTO> books = new List<BookDTO>();
         IWebDriver driver;
         IWebElement query, searchButton, resultadosBusqueda;
         IReadOnlyCollection<IWebElement> booksWrapper;
@@ -45,7 +45,7 @@ namespace WrapperIEI.Business.Services
 
         #region Methods
 
-        public List<LibroDTO> GetList()
+        public List<BookDTO> GetList()
         {
             throw new NotImplementedException();
         }

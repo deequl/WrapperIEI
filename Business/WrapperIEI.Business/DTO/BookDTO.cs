@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WrapperIEI.DTO
 {
-    public class LibroDTO
+    public class BookDTO
     {
         public string Provider { get; set; }
         public string Title { get; set; }

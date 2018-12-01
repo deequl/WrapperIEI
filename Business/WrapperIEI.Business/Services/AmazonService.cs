@@ -14,11 +14,11 @@ using WrapperIEI.Business.Helpers;
 
 namespace WrapperIEI.Business.Services
 {
-    public class AmazonService : IWrapperService<LibroDTO>
+    public class AmazonService : IWrapperService<BookDTO>
     {
         string author, price, title, discount;
         double priceAmount, discountAmount;
-        List<LibroDTO> books = new List<LibroDTO>();
+        List<BookDTO> books = new List<BookDTO>();
         IWebDriver driver;
         IWebElement query, searchButton, resultadosBusqueda;
         IReadOnlyCollection<IWebElement> booksWrapper;
@@ -45,7 +45,7 @@ namespace WrapperIEI.Business.Services
 
 
             // This is only for testing
-            PrintBooks();
+            //PrintBooks();
 
         }
 
@@ -54,7 +54,7 @@ namespace WrapperIEI.Business.Services
         private void PrintBooks()
         {
             Console.WriteLine(" ------ BOOKS ------ ");
-            foreach (LibroDTO book in books)
+            foreach (BookDTO book in books)
             {
                 Console.WriteLine("------------");
                 Console.WriteLine(book.Title);
@@ -85,7 +85,7 @@ namespace WrapperIEI.Business.Services
             return booksWrapper = resultadosBusqueda.FindElements(By.TagName("li"));
         }
 
-        public List<LibroDTO> GetList()
+        public List<BookDTO> GetList()
         {
             return books;
         }
@@ -132,7 +132,7 @@ namespace WrapperIEI.Business.Services
 
             if (!String.IsNullOrEmpty(price))
             {
-                priceAmount = Double.Parse(price.Split(' ').Last(), System.Globalization.CultureInfo.CurrentCulture);
+                priceAmount = (price=="GRATIS") ? 0 : Double.Parse(price.Split(' ').Last(), System.Globalization.CultureInfo.CurrentCulture);
             }
 
             if (!String.IsNullOrEmpty(discount))
@@ -143,7 +143,7 @@ namespace WrapperIEI.Business.Services
 
         public void StoreItem()
         {
-            LibroDTO libroSave = new LibroDTO
+            BookDTO libroSave = new BookDTO
             {
                 Provider = Constants.AMAZON,
                 Title = ((!String.IsNullOrEmpty(title)) ? title : "No title"),
