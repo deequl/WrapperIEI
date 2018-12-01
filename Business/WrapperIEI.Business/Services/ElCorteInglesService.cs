@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using OpenQA.Selenium;
 using WrapperIEI.DTO;
@@ -22,9 +23,8 @@ namespace WrapperIEI.Business.Services
             this.driver = driver;
         }
 
-        public void Init(string searchText, string url = "https://www.amazon.es")
+        public void Init(string searchText, string url = "https://www.elcorteingles.es/libros/search/?s=")
         {
-
             //look for the books wrapper
             booksWrapper = SearchItemsWrapper(searchText, url);
 
@@ -47,22 +47,86 @@ namespace WrapperIEI.Business.Services
 
         public List<BookDTO> GetList()
         {
-            throw new NotImplementedException();
+            return books;
         }
 
         public IReadOnlyCollection<IWebElement> SearchItemsWrapper(string searchText, string url)
         {
-            throw new NotImplementedException();
+            url = url + searchText;
+            driver.Navigate().GoToUrl(url);
+            resultadosBusqueda = driver.FindElement(By.ClassName("product-list"));
+            return booksWrapper = resultadosBusqueda.FindElements(By.TagName("li"));
         }
 
         public void SetItemProperties(IWebElement item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                author = item.FindElement(By.ClassName("product-name")).FindElement(By.ClassName("brand")).Text;
+            }
+
+            catch (Exception)
+            {
+                author = null;
+            }
+
+            try
+            {
+                title = item.FindElement(By.ClassName("product-name")).FindElement(By.ClassName("info-name")).Text;
+            }
+            catch (Exception)
+            {
+
+                title = null;
+            }
+
+            try
+            {
+                price = item.FindElement(By.ClassName("product-price")).FindElement(By.ClassName("current")).Text;
+            }
+            catch (Exception)
+            {
+                price = null;
+            }
+
+            try
+            {
+                discount = item.FindElement(By.ClassName("product-price")).FindElement(By.ClassName("former")).Text;
+            }
+            catch (Exception)
+            {
+                discount = null;
+            }
+
+            if (!String.IsNullOrEmpty(price))
+            {
+                priceAmount = (price == "GRATIS") ? 0 : Double.Parse(price.Split('€').First(), System.Globalization.CultureInfo.CurrentCulture);
+            }
+
+            if (!String.IsNullOrEmpty(discount))
+            {
+                discountAmount = Double.Parse(discount.Split('€').First(), System.Globalization.CultureInfo.CurrentCulture);
+
+                discount = Math.Round((100 - ((discountAmount * 100) / priceAmount)), 2).ToString();
+
+
+            }
+
+
         }
 
         public void StoreItem()
         {
-            throw new NotImplementedException();
+            BookDTO libroSave = new BookDTO
+            {
+                Provider = Constants.EL_CORTE_INGLES,
+                Title = ((!String.IsNullOrEmpty(title)) ? title : "No title"),
+                Author = ((!String.IsNullOrEmpty(author)) ? author : "No author"),
+                Price = priceAmount,
+                Discount = discount
+            };
+
+            books.Add(libroSave);
         }
 
         #endregion

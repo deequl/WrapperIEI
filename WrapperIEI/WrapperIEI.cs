@@ -102,7 +102,8 @@ namespace WrapperIEI
 
             if (AmazonChecked && ElCorteInglesChecked)
             {
-                localList = (List<BookDTO>)AmazonList.Concat(ElCorteInglesList);
+                AmazonList.AddRange(ElCorteInglesList);
+                localList = AmazonList;
             }
 
             return localList;
@@ -120,8 +121,8 @@ namespace WrapperIEI
                 ListViewItem item = booksList.Items.Add(book.Provider);
                 item.SubItems.Add(book.Title);
                 item.SubItems.Add(book.Author);
-                item.SubItems.Add(book.Price.ToString());
-                item.SubItems.Add(book.Discount.ToString());
+                item.SubItems.Add(book.Price.ToString() + "€");
+                item.SubItems.Add((!String.IsNullOrEmpty(book.Discount)) ? book.Discount + " %" : "No discount");
             }
 
             

@@ -12,6 +12,6 @@ namespace WrapperIEI.DTO
         public string Title { get; set; }
         public string Author { get; set; }
         public double Price { get; set; }
-        public double Discount { get; set; }
+        public string Discount { get; set; }
     }
 }

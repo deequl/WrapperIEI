@@ -138,6 +138,10 @@ namespace WrapperIEI.Business.Services
             if (!String.IsNullOrEmpty(discount))
             {
                 discountAmount = Double.Parse(discount.Split(' ').Last(), System.Globalization.CultureInfo.CurrentCulture);
+
+                discount = Math.Round((100 - ((discountAmount * 100) / priceAmount)),2).ToString();
+
+
             }
         }
 
@@ -149,7 +153,7 @@ namespace WrapperIEI.Business.Services
                 Title = ((!String.IsNullOrEmpty(title)) ? title : "No title"),
                 Author = ((!String.IsNullOrEmpty(author)) ? author : "No author"),
                 Price = priceAmount,
-                Discount = discountAmount
+                Discount = discount
             };
 
             books.Add(libroSave);
