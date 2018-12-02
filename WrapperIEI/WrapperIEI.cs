@@ -18,7 +18,7 @@ namespace WrapperIEI
     public partial class WrapperIEI : Form
     {
 
-        List<BookDTO> _books;
+        List<BookDTO> _books = new List<BookDTO>();
 
         int mov, movX, movY;
 
@@ -113,22 +113,36 @@ namespace WrapperIEI
 
         private void SearchBtn_Click(object sender, EventArgs e)
         {
+            _books.Clear();
+            booksList.Items.Clear();
             SetProperties();
-            _books = PrepareListOfBooks();
 
-            foreach (BookDTO book in _books)
+            if (CanSearch())
             {
-                ListViewItem item = booksList.Items.Add(book.Provider);
-                item.SubItems.Add(book.Title);
-                item.SubItems.Add(book.Author);
-                item.SubItems.Add(book.Price.ToString() + "€");
-                item.SubItems.Add((!String.IsNullOrEmpty(book.Discount)) ? book.Discount + " %" : "No discount");
-            }
+                _books = PrepareListOfBooks();
 
-            
+                foreach (BookDTO book in _books)
+                {
+                    ListViewItem item = booksList.Items.Add(book.Provider);
+                    item.SubItems.Add(book.Title);
+                    item.SubItems.Add(book.Author);
+                    item.SubItems.Add(book.Price.ToString() + Constants.MONEY_SYMBOL);
+                    item.SubItems.Add((!String.IsNullOrEmpty(book.Discount)) ? book.Discount + Constants.DISCOUNT_SYMBOL : "No discount");
+                }
+            }
+            else
+            {
+                MessageBox.Show(Constants.EMPTY_CONTENT_MESSAGE, Constants.EMPTY_TITLE_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
         }
 
+        private bool CanSearch()
+        {
+            return ((!String.IsNullOrEmpty(titleTxt.Text) && titleTxt.Text != Constants.TITLE_PLACEHOLDER) ||
+                    (!String.IsNullOrEmpty(authorTxt.Text) && authorTxt.Text != Constants.AUTHOR_PLACEHOLDER)) &&
+                    (AmazonChecked || ElCorteInglesChecked);
+        }
 
 
 

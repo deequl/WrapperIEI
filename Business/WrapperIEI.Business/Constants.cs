@@ -15,5 +15,15 @@ namespace WrapperIEI
         // PLACEHOLDERS
         public const string TITLE_PLACEHOLDER = "Titulo del libro";
         public const string AUTHOR_PLACEHOLDER = "Autor";
+
+        //SYMBOLS
+        public const string MONEY_SYMBOL = " €";
+        public const string DISCOUNT_SYMBOL = " %";
+
+        // MESSAGES
+        public const string EMPTY_CONTENT_MESSAGE = "Por favor marque al menos un proveedor en el que buscar e indique un titulo o autor.";
+        public const string EMPTY_TITLE_MESSAGE = "Uno o mas campos estan vacios";
+
+
     }
 }

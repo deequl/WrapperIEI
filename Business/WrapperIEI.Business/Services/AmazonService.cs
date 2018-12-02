@@ -28,7 +28,7 @@ namespace WrapperIEI.Business.Services
             this.driver = driver;
         }
 
-        public void Init(string searchText, string url = "https://www.amazon.es")
+        public void Init(string searchText, string url = "https://www.amazon.es/s/url=search-alias%3Dstripbooks&field-keywords=")
         {
 
             //look for the books wrapper
@@ -43,44 +43,14 @@ namespace WrapperIEI.Business.Services
 
             }
 
-
-            // This is only for testing
-            //PrintBooks();
-
         }
 
         #region Methods
 
-        private void PrintBooks()
-        {
-            Console.WriteLine(" ------ BOOKS ------ ");
-            foreach (BookDTO book in books)
-            {
-                Console.WriteLine("------------");
-                Console.WriteLine(book.Title);
-                Console.WriteLine(book.Author);
-                Console.WriteLine(book.Price);
-                Console.WriteLine(book.Discount);
-                Console.WriteLine("------------");
-            }
-        }
-
         public IReadOnlyCollection<IWebElement> SearchItemsWrapper(string searchText, string url)
         {
-            //driver.Navigate().GoToUrl("https://www.amazon.es/comprar-libros-espa%C3%B1ol/b/ref=nav_shopall_abks?ie=UTF8&node=599364031");
+            url += searchText;
             driver.Navigate().GoToUrl(url);
-
-            query = driver.FindElement(By.Id("twotabsearchtextbox"));
-
-            // Text to search
-            query.SendKeys(searchText);
-
-            searchButton = driver.FindElement(By.ClassName("nav-input"));
-            searchButton.Click();
-
-
-            Wait.WaitUntilElementExists(By.Id("atfResults"), driver);
-
             resultadosBusqueda = driver.FindElement(By.Id("atfResults"));
             return booksWrapper = resultadosBusqueda.FindElements(By.TagName("li"));
         }
