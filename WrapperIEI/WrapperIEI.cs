@@ -135,6 +135,7 @@ namespace WrapperIEI
 
             if (CanSearch())
             {
+                searchBtn.Enabled = false;
                 loadingPanel.Show();
                 loadingPicture.Show();
                 loadingLabel.Show();
@@ -153,12 +154,13 @@ namespace WrapperIEI
                 }
 
                 loadingPanel.Hide();
+                searchBtn.Enabled = true;
             }
             else
             {
                 MessageBox.Show(Constants.EMPTY_CONTENT_MESSAGE, Constants.EMPTY_TITLE_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
+            
         }
 
         private bool CanSearch()
