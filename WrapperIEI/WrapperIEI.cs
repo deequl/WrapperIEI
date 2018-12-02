@@ -12,11 +12,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WrapperIEI.DTO;
 using WrapperIEI.Business.Services;
+using System.Threading;
 
 namespace WrapperIEI
 {
     public partial class WrapperIEI : Form
     {
+
+        ChromeDriver _driver;
 
         List<BookDTO> _books = new List<BookDTO>();
 
@@ -66,7 +69,7 @@ namespace WrapperIEI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            loadingPanel.Hide();
         }
 
 
@@ -79,47 +82,66 @@ namespace WrapperIEI
 
         }
 
-        private List<BookDTO> PrepareListOfBooks()
-        {
+        private void ConfigureWebDriver() {
+            var options = new ChromeOptions();
+            options.AddArgument("--headless");
+            var chromeDriverService = ChromeDriverService.CreateDefaultService();
+            chromeDriverService.HideCommandPromptWindow = true;
+            _driver = new ChromeDriver(chromeDriverService, options);
+        }
 
+        private async Task<List<BookDTO>> PrepareListOfBooks()
+        {
+            ConfigureWebDriver();
             List<BookDTO> localList = new List<BookDTO>();
             List<BookDTO> AmazonList = new List<BookDTO>();
             List<BookDTO> ElCorteInglesList = new List<BookDTO>();
-
-            if (AmazonChecked)
+            await Task.Run(() =>
             {
-                AmazonService amazon = new AmazonService(new ChromeDriver());
-                amazon.Init(TitleBook);
-                AmazonList = localList = amazon.GetList();
-            }
+                if (AmazonChecked)
+                {
+                    AmazonService amazon = new AmazonService(_driver);
+                    amazon.Init(TitleBook);
+                    AmazonList = localList = amazon.GetList();
+                }
 
-            if (ElCorteInglesChecked)
-            {
-                ElCorteInglesService elCorteIngles = new ElCorteInglesService(new ChromeDriver());
-                elCorteIngles.Init(TitleBook);
-                ElCorteInglesList = localList = elCorteIngles.GetList();
-            }
+                if (ElCorteInglesChecked)
+                {
+                    ElCorteInglesService elCorteIngles = new ElCorteInglesService(_driver);
+                    elCorteIngles.Init(TitleBook);
+                    ElCorteInglesList = localList = elCorteIngles.GetList();
+                }
 
-            if (AmazonChecked && ElCorteInglesChecked)
-            {
-                AmazonList.AddRange(ElCorteInglesList);
-                localList = AmazonList;
-            }
+                if (AmazonChecked && ElCorteInglesChecked)
+                {
+                    AmazonList.AddRange(ElCorteInglesList);
+                    localList = AmazonList;
+                }
+            });
+           
 
-            return localList;
-        } 
+            return  localList;
+        }
+
 
         #region Events
 
-        private void SearchBtn_Click(object sender, EventArgs e)
+        private async void SearchBtn_Click(object sender, EventArgs e)
         {
             _books.Clear();
+
             booksList.Items.Clear();
             SetProperties();
 
             if (CanSearch())
             {
-                _books = PrepareListOfBooks();
+                loadingPanel.Show();
+                loadingPicture.Show();
+                loadingLabel.Show();
+                loadingPanel.Refresh();
+                loadingPicture.Update();
+
+                _books = await PrepareListOfBooks();
 
                 foreach (BookDTO book in _books)
                 {
@@ -129,6 +151,8 @@ namespace WrapperIEI
                     item.SubItems.Add(book.Price.ToString() + Constants.MONEY_SYMBOL);
                     item.SubItems.Add((!String.IsNullOrEmpty(book.Discount)) ? book.Discount + Constants.DISCOUNT_SYMBOL : "No discount");
                 }
+
+                loadingPanel.Hide();
             }
             else
             {

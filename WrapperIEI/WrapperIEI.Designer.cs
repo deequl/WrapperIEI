@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WrapperIEI));
-            this.logoPB = new System.Windows.Forms.PictureBox();
             this.titleLbl = new System.Windows.Forms.Label();
             this.titleTxt = new System.Windows.Forms.TextBox();
             this.titlePanel = new System.Windows.Forms.Panel();
@@ -47,19 +46,15 @@
             this.closeLbl = new System.Windows.Forms.Label();
             this.minifyLbl = new System.Windows.Forms.Label();
             this.barPanel = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.logoPB)).BeginInit();
+            this.logoPB = new System.Windows.Forms.PictureBox();
+            this.loadingPanel = new System.Windows.Forms.Panel();
+            this.loadingPicture = new System.Windows.Forms.PictureBox();
+            this.loadingLabel = new System.Windows.Forms.Label();
             this.barPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logoPB)).BeginInit();
+            this.loadingPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loadingPicture)).BeginInit();
             this.SuspendLayout();
-            // 
-            // logoPB
-            // 
-            this.logoPB.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("logoPB.BackgroundImage")));
-            this.logoPB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.logoPB.Location = new System.Drawing.Point(552, 21);
-            this.logoPB.Name = "logoPB";
-            this.logoPB.Size = new System.Drawing.Size(64, 64);
-            this.logoPB.TabIndex = 0;
-            this.logoPB.TabStop = false;
             // 
             // titleLbl
             // 
@@ -181,7 +176,7 @@
             this.booksList.Location = new System.Drawing.Point(12, 215);
             this.booksList.Name = "booksList";
             this.booksList.Size = new System.Drawing.Size(925, 300);
-            this.booksList.TabIndex = 13;
+            this.booksList.TabIndex = 20;
             this.booksList.TileSize = new System.Drawing.Size(600, 30);
             this.booksList.UseCompatibleStateImageBehavior = false;
             this.booksList.View = System.Windows.Forms.View.Details;
@@ -254,12 +249,53 @@
             this.barPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BarPanel_MouseMove);
             this.barPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BarPanel_MouseUp);
             // 
+            // logoPB
+            // 
+            this.logoPB.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("logoPB.BackgroundImage")));
+            this.logoPB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.logoPB.Location = new System.Drawing.Point(552, 21);
+            this.logoPB.Name = "logoPB";
+            this.logoPB.Size = new System.Drawing.Size(64, 64);
+            this.logoPB.TabIndex = 0;
+            this.logoPB.TabStop = false;
+            // 
+            // loadingPanel
+            // 
+            this.loadingPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.loadingPanel.Controls.Add(this.loadingPicture);
+            this.loadingPanel.Controls.Add(this.loadingLabel);
+            this.loadingPanel.Location = new System.Drawing.Point(12, 215);
+            this.loadingPanel.Name = "loadingPanel";
+            this.loadingPanel.Size = new System.Drawing.Size(925, 300);
+            this.loadingPanel.TabIndex = 16;
+            // 
+            // loadingPicture
+            // 
+            this.loadingPicture.Image = ((System.Drawing.Image)(resources.GetObject("loadingPicture.Image")));
+            this.loadingPicture.Location = new System.Drawing.Point(365, 15);
+            this.loadingPicture.Name = "loadingPicture";
+            this.loadingPicture.Size = new System.Drawing.Size(192, 185);
+            this.loadingPicture.TabIndex = 2;
+            this.loadingPicture.TabStop = false;
+            // 
+            // loadingLabel
+            // 
+            this.loadingLabel.AutoSize = true;
+            this.loadingLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loadingLabel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.loadingLabel.Location = new System.Drawing.Point(398, 203);
+            this.loadingLabel.Name = "loadingLabel";
+            this.loadingLabel.Size = new System.Drawing.Size(138, 18);
+            this.loadingLabel.TabIndex = 1;
+            this.loadingLabel.Text = "Buscando Libros...";
+            // 
             // WrapperIEI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(36)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(950, 525);
+            this.Controls.Add(this.loadingPanel);
             this.Controls.Add(this.barPanel);
             this.Controls.Add(this.minifyLbl);
             this.Controls.Add(this.closeLbl);
@@ -276,9 +312,12 @@
             this.Name = "WrapperIEI";
             this.Text = "Wrapper IEI";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.logoPB)).EndInit();
             this.barPanel.ResumeLayout(false);
             this.barPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logoPB)).EndInit();
+            this.loadingPanel.ResumeLayout(false);
+            this.loadingPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loadingPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -304,6 +343,9 @@
         private System.Windows.Forms.Label closeLbl;
         private System.Windows.Forms.Label minifyLbl;
         private System.Windows.Forms.Panel barPanel;
+        private System.Windows.Forms.Panel loadingPanel;
+        private System.Windows.Forms.Label loadingLabel;
+        private System.Windows.Forms.PictureBox loadingPicture;
     }
 }
 
