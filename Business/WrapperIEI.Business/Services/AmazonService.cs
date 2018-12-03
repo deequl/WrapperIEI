@@ -62,7 +62,16 @@ namespace WrapperIEI.Business.Services
         {
             url += searchText;
             driver.Navigate().GoToUrl(url);
-            resultadosBusqueda = driver.FindElement(By.Id("atfResults"));
+            try
+            {
+                resultadosBusqueda = driver.FindElement(By.Id("atfResults"));
+            }
+
+            catch (Exception)
+            {
+                throw new NoResultsException("No se han encontrado resultados");
+            }
+            
             return booksWrapper = resultadosBusqueda.FindElements(By.TagName("li"));
         }
 

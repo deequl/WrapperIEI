@@ -50,10 +50,15 @@
             this.loadingPanel = new System.Windows.Forms.Panel();
             this.loadingPicture = new System.Windows.Forms.PictureBox();
             this.loadingLabel = new System.Windows.Forms.Label();
+            this.errorPanel = new System.Windows.Forms.Panel();
+            this.crossIcon = new System.Windows.Forms.Label();
+            this.errorLabel = new System.Windows.Forms.Label();
+            this.errorBtn = new System.Windows.Forms.Button();
             this.barPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPB)).BeginInit();
             this.loadingPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loadingPicture)).BeginInit();
+            this.errorPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // titleLbl
@@ -289,12 +294,64 @@
             this.loadingLabel.TabIndex = 1;
             this.loadingLabel.Text = "Buscando Libros...";
             // 
+            // errorPanel
+            // 
+            this.errorPanel.Controls.Add(this.errorBtn);
+            this.errorPanel.Controls.Add(this.errorLabel);
+            this.errorPanel.Controls.Add(this.crossIcon);
+            this.errorPanel.Location = new System.Drawing.Point(12, 215);
+            this.errorPanel.Name = "errorPanel";
+            this.errorPanel.Size = new System.Drawing.Size(926, 300);
+            this.errorPanel.TabIndex = 21;
+            // 
+            // crossIcon
+            // 
+            this.crossIcon.AutoSize = true;
+            this.crossIcon.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.crossIcon.ForeColor = System.Drawing.Color.DarkRed;
+            this.crossIcon.Location = new System.Drawing.Point(445, 47);
+            this.crossIcon.Name = "crossIcon";
+            this.crossIcon.Size = new System.Drawing.Size(43, 42);
+            this.crossIcon.TabIndex = 0;
+            this.crossIcon.Text = "X";
+            // 
+            // errorLabel
+            // 
+            this.errorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.errorLabel.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorLabel.ForeColor = System.Drawing.Color.DarkRed;
+            this.errorLabel.Location = new System.Drawing.Point(0, 127);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(922, 24);
+            this.errorLabel.TabIndex = 1;
+            this.errorLabel.Text = "Ups. Algo salio mal!";
+            this.errorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // errorBtn
+            // 
+            this.errorBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(94)))));
+            this.errorBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.errorBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.errorBtn.FlatAppearance.BorderSize = 0;
+            this.errorBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(83)))), ((int)(((byte)(104)))));
+            this.errorBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.errorBtn.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorBtn.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.errorBtn.Location = new System.Drawing.Point(435, 206);
+            this.errorBtn.Name = "errorBtn";
+            this.errorBtn.Size = new System.Drawing.Size(75, 35);
+            this.errorBtn.TabIndex = 2;
+            this.errorBtn.Text = "OK";
+            this.errorBtn.UseVisualStyleBackColor = false;
+            this.errorBtn.Click += new System.EventHandler(this.ErrorBtn_Click);
+            // 
             // WrapperIEI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(36)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(950, 525);
+            this.Controls.Add(this.errorPanel);
             this.Controls.Add(this.loadingPanel);
             this.Controls.Add(this.barPanel);
             this.Controls.Add(this.minifyLbl);
@@ -318,6 +375,8 @@
             this.loadingPanel.ResumeLayout(false);
             this.loadingPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.loadingPicture)).EndInit();
+            this.errorPanel.ResumeLayout(false);
+            this.errorPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -346,6 +405,10 @@
         private System.Windows.Forms.Panel loadingPanel;
         private System.Windows.Forms.Label loadingLabel;
         private System.Windows.Forms.PictureBox loadingPicture;
+        private System.Windows.Forms.Panel errorPanel;
+        private System.Windows.Forms.Button errorBtn;
+        private System.Windows.Forms.Label errorLabel;
+        private System.Windows.Forms.Label crossIcon;
     }
 }
 

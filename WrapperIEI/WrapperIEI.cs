@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WrapperIEI.DTO;
+using WrapperIEI.Business;
 using WrapperIEI.Business.Services;
 using System.Threading;
 
@@ -24,6 +25,9 @@ namespace WrapperIEI
         List<BookDTO> _books = new List<BookDTO>();
 
         int mov, movX, movY;
+
+        bool _amazonError, _elCorteInglesError;
+
 
         #region Properties
 
@@ -59,6 +63,14 @@ namespace WrapperIEI
             set => _elCorteInglesChecked = value;
         }
 
+        string _errorMessage;
+        string ErrorMessage
+        {
+            get => _errorMessage;
+
+            set => _errorMessage = value;
+        }
+
         #endregion
 
         public WrapperIEI()
@@ -69,6 +81,7 @@ namespace WrapperIEI
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            errorPanel.Hide();
             loadingPanel.Hide();
         }
 
@@ -101,15 +114,38 @@ namespace WrapperIEI
                 if (AmazonChecked)
                 {
                     AmazonService amazon = new AmazonService(_driver);
-                    amazon.Init(TitleBook, AuthorBook);
-                    AmazonList = localList = amazon.GetList();
+
+                    try
+                    {
+                        amazon.Init(TitleBook, AuthorBook);
+                        AmazonList = localList = amazon.GetList();
+                    }
+                    catch (NoResultsException e)
+                    {
+                        _amazonError = true;
+                        ErrorMessage = e.Message;
+                    }
+
+                    
+                    
                 }
 
                 if (ElCorteInglesChecked)
                 {
                     ElCorteInglesService elCorteIngles = new ElCorteInglesService(_driver);
-                    elCorteIngles.Init(TitleBook, AuthorBook);
-                    ElCorteInglesList = localList = elCorteIngles.GetList();
+
+                    try
+                    {
+                        elCorteIngles.Init(TitleBook, AuthorBook);
+                        ElCorteInglesList = localList = elCorteIngles.GetList();
+                    }
+                    catch (NoResultsException e)
+                    {
+                        _elCorteInglesError = true;
+                        ErrorMessage = e.Message;
+                    }
+
+
                 }
 
                 if (AmazonChecked && ElCorteInglesChecked)
@@ -144,17 +180,30 @@ namespace WrapperIEI
 
                 _books = await PrepareListOfBooks();
 
-                foreach (BookDTO book in _books)
+                if (((!_amazonError && !_elCorteInglesError)  && (AmazonChecked || ElCorteInglesChecked)) ||
+                    ((AmazonChecked && ElCorteInglesChecked) && !(_amazonError && _elCorteInglesError) ) )
                 {
-                    ListViewItem item = booksList.Items.Add(book.Provider);
-                    item.SubItems.Add(book.Title);
-                    item.SubItems.Add(book.Author);
-                    item.SubItems.Add(book.Price.ToString() + Constants.MONEY_SYMBOL);
-                    item.SubItems.Add((!String.IsNullOrEmpty(book.Discount)) ? book.Discount + Constants.DISCOUNT_SYMBOL : "No discount");
+                    foreach (BookDTO book in _books)
+                    {
+                        ListViewItem item = booksList.Items.Add(book.Provider);
+                        item.SubItems.Add(book.Title);
+                        item.SubItems.Add(book.Author);
+                        item.SubItems.Add(book.Price.ToString() + Constants.MONEY_SYMBOL);
+                        item.SubItems.Add((!String.IsNullOrEmpty(book.Discount)) ? book.Discount + Constants.DISCOUNT_SYMBOL : "No discount");
+                    }
+                    
+                    searchBtn.Enabled = true;
+                }
+                else
+                {
+                    errorPanel.Show();
+                    errorLabel.Text = ErrorMessage;
                 }
 
                 loadingPanel.Hide();
-                searchBtn.Enabled = true;
+
+
+
             }
             else
             {
@@ -257,6 +306,14 @@ namespace WrapperIEI
                 }
 
             }
+        }
+
+        private void ErrorBtn_Click(object sender, EventArgs e)
+        {
+            _amazonError = false;
+            _elCorteInglesError = false;
+            errorPanel.Hide();
+            searchBtn.Enabled = true;
         }
 
         private void MinifyWindow(object sender, EventArgs e) {

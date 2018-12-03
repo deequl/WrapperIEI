@@ -64,7 +64,15 @@ namespace WrapperIEI.Business.Services
         {
             url = url + searchText;
             driver.Navigate().GoToUrl(url);
-            resultadosBusqueda = driver.FindElement(By.ClassName("product-list"));
+            try
+            {
+                resultadosBusqueda = driver.FindElement(By.ClassName("product-list"));
+            }
+            catch(Exception)
+            {
+                throw new NoResultsException("No se han encontrado resultados");
+            }
+            
             return booksWrapper = resultadosBusqueda.FindElements(By.TagName("li"));
         }
 
