@@ -47,10 +47,6 @@ namespace WrapperIEI.Business.Services
 
             }
 
-
-            // This is only for testing
-            //PrintBooks();
-
         }
 
         #region Methods
