@@ -9,7 +9,7 @@ namespace WrapperIEI.Business.Services
 {
     public class ElCorteInglesService : IWrapperService<BookDTO>
     {
-
+        string _authorBook;
         string author, price, title, discount;
         double priceAmount, discountAmount;
         List<BookDTO> books = new List<BookDTO>();
@@ -23,10 +23,20 @@ namespace WrapperIEI.Business.Services
             this.driver = driver;
         }
 
-        public void Init(string searchText, string url = "https://www.elcorteingles.es/libros/search/?s=")
+        public void Init(string searchText, string authorBook = null, string url = "https://www.elcorteingles.es/libros/search/?s=")
         {
+            _authorBook = authorBook;
+
             //look for the books wrapper
-            booksWrapper = SearchItemsWrapper(searchText, url);
+            if ((!String.IsNullOrEmpty(searchText) && String.IsNullOrEmpty(authorBook)) ||
+                (!String.IsNullOrEmpty(searchText) && !String.IsNullOrEmpty(authorBook)))
+            {
+                booksWrapper = SearchItemsWrapper(searchText, url);
+            }
+            else
+            {
+                booksWrapper = SearchItemsWrapper(authorBook, url);
+            }
 
             //Store each book into a list
             foreach (IWebElement book in booksWrapper)
@@ -47,7 +57,7 @@ namespace WrapperIEI.Business.Services
 
         public List<BookDTO> GetList()
         {
-            return books;
+            return (!String.IsNullOrEmpty(_authorBook)) ? books.Where(x => x.Author.ToLower().Contains(_authorBook.ToLower())).ToList() : books;
         }
 
         public IReadOnlyCollection<IWebElement> SearchItemsWrapper(string searchText, string url)

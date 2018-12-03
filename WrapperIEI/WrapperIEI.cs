@@ -101,14 +101,14 @@ namespace WrapperIEI
                 if (AmazonChecked)
                 {
                     AmazonService amazon = new AmazonService(_driver);
-                    amazon.Init(TitleBook);
+                    amazon.Init(TitleBook, AuthorBook);
                     AmazonList = localList = amazon.GetList();
                 }
 
                 if (ElCorteInglesChecked)
                 {
                     ElCorteInglesService elCorteIngles = new ElCorteInglesService(_driver);
-                    elCorteIngles.Init(TitleBook);
+                    elCorteIngles.Init(TitleBook, AuthorBook);
                     ElCorteInglesList = localList = elCorteIngles.GetList();
                 }
 
